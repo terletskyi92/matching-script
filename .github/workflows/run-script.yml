@@ -1,4 +1,4 @@
-name: Run Matching Script
+≈name: Run Matching Script
 
 on:
   schedule:
