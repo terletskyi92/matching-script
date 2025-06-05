@@ -27,4 +27,4 @@ jobs:
           GOOGLE_APPLICATION_CREDENTIALS_JSON: ${{ secrets.CREDENTIALS_JSON }}
         run: |
           echo "$GOOGLE_APPLICATION_CREDENTIALS_JSON" > credentials.json
-          python main.py | tee debug_output.log
+          python main.py 2>&1 | tee debug_output.log
