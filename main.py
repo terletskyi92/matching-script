@@ -6,7 +6,6 @@ from google.oauth2 import service_account
 from gspread_dataframe import set_with_dataframe
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseDownload
-from google.oauth2 import service_account
 
 def download_csv_from_drive(file_id, creds):
     drive_service = build("drive", "v3", credentials=creds)
@@ -29,7 +28,7 @@ def download_json_feed(token):
     return df
 
 def match_and_clean(csv_df, json_df):
-    # Перейменовуємо колонку code → Code, щоб не змінювати решту коду
+    # Перейменовуємо code → Code
     json_df = json_df.rename(columns={"code": "Code"})
 
     df = csv_df.merge(json_df, how="left", left_on="merchant_offer_code", right_on="Code")
@@ -38,8 +37,8 @@ def match_and_clean(csv_df, json_df):
     df["max_pay_in_parts"] = df.get("Max Pay in Parts", 0).fillna(0)
     return df[["product_id", "merchant_offer_code", "price", "amount", "max_pay_in_parts"]]
 
-def main(request):
-    FILE_ID = "1Q032299MGwURcmUGhthxmvBRYwXZPQFP"
+def main(request=None):
+    FILE_ID = "11WVG9reGILDyLPj3BVR4luXQ2nZ7j0Tv"
     TOKEN = "029d4bbe25387369fad9831eae825acd"
     SPREADSHEET_ID = "1YhkZIIzSy--coI2rGs1nqtNf5pND3oiYjTaXefrOeko"
     SHEET_NAME = "moyo"
@@ -57,18 +56,15 @@ def main(request):
     df_json = download_json_feed(TOKEN)
     df_final = match_and_clean(df_csv, df_json)
 
+    print(f"📦 Кількість рядків у df_final: {len(df_final)}")
+    print(df_final.head().to_string())
+
     client = gspread.authorize(creds)
     sheet = client.open_by_key(SPREADSHEET_ID).worksheet(SHEET_NAME)
     sheet.clear()
-    print(df_final.head().to_string())  # додано для виводу перших 5 рядків
-    print("📄 df_csv.head():")
-    print(df_csv.head().to_string())
-
-    print("🟢 df_json.head():")
-    print(df_json.head().to_string())
-
-    print(f"🔢 Кількість рядків у df_final: {len(df_final)}")
-    print(df_final.head().to_string())
     set_with_dataframe(sheet, df_final)
-    
-    return "✅ Данні оновлено в Google Sheets!"
+
+    return "✅ Дані оновлено в Google Sheets!"
+
+if __name__ == "__main__":
+    main()
