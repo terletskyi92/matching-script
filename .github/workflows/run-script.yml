@@ -27,33 +27,4 @@ jobs:
           GOOGLE_APPLICATION_CREDENTIALS_JSON: ${{ secrets.CREDENTIALS_JSON }}
         run: |
           echo "$GOOGLE_APPLICATION_CREDENTIALS_JSON" > credentials.json
-          python main.py | tee debug_output.logname: Run Matching Script
-
-on:
-  schedule:
-    - cron: '0 10-18 * * *'  # щогодини з 10:00 до 18:00 за UTC
-  workflow_dispatch:         # ручний запуск
-
-jobs:
-  run-script:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
-
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-
-      - name: Run script
-  continue-on-error: true
-  env:
-    GOOGLE_APPLICATION_CREDENTIALS_JSON: ${{ secrets.CREDENTIALS_JSON }}
-  run: |
-    echo "$GOOGLE_APPLICATION_CREDENTIALS_JSON" > credentials.json
-    python main.py | tee debug_output.log
+          python main.py | tee debug_output.log
