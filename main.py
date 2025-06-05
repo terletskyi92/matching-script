@@ -57,6 +57,7 @@ def main(request):
     client = gspread.authorize(creds)
     sheet = client.open_by_key(SPREADSHEET_ID).worksheet(SHEET_NAME)
     sheet.clear()
+    print(df_final.head())  # додано для виводу перших 5 рядків
     set_with_dataframe(sheet, df_final)
 
     return "✅ Данні оновлено в Google Sheets!"
