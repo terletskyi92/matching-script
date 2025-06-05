@@ -29,6 +29,9 @@ def download_json_feed(token):
     return df
 
 def match_and_clean(csv_df, json_df):
+    # Перейменовуємо колонку code → Code, щоб не змінювати решту коду
+    json_df = json_df.rename(columns={"code": "Code"})
+
     df = csv_df.merge(json_df, how="left", left_on="merchant_offer_code", right_on="Code")
     df["price"] = df.apply(lambda row: 0 if row.get("Amount", 1) == 0 else row.get("Price", 0), axis=1)
     df["amount"] = df.get("Amount", 0).fillna(0)
