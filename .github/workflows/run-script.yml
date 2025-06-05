@@ -26,5 +26,5 @@ jobs:
         env:
           GOOGLE_APPLICATION_CREDENTIALS_JSON: ${{ secrets.CREDENTIALS_JSON }}
         run: |
-          echo "$GOOGLE_APPLICATION_CREDENTIALS_JSON" > credentials.json
-          python main.py 2>&1 | tee debug_output.log
+  echo "$GOOGLE_APPLICATION_CREDENTIALS_JSON" > credentials.json
+  python main.py
