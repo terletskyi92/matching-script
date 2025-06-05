@@ -61,9 +61,14 @@ def main(request):
     sheet = client.open_by_key(SPREADSHEET_ID).worksheet(SHEET_NAME)
     sheet.clear()
     print(df_final.head().to_string())  # додано для виводу перших 5 рядків
+    print("📄 df_csv.head():")
+    print(df_csv.head().to_string())
+
+    print("🟢 df_json.head():")
+    print(df_json.head().to_string())
+
+    print(f"🔢 Кількість рядків у df_final: {len(df_final)}")
+    print(df_final.head().to_string())
     set_with_dataframe(sheet, df_final)
     
     return "✅ Данні оновлено в Google Sheets!"
-    # 🟢 Це має бути ПОЗА функцією main:
-    if __name__ == "__main__":
-        main(None)
