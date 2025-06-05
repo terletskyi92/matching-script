@@ -38,8 +38,8 @@ def match_and_clean(csv_df, json_df):
 def main(request):
     FILE_ID = "1Q032299MGwURcmUGhthxmvBRYwXZPQFP"
     TOKEN = "029d4bbe25387369fad9831eae825acd"
-    SPREADSHEET_ID = "🔑_ВСТАВ_ТУТ_ID_ТВОГО_GOOGLE_SHEET"
-    SHEET_NAME = "Лист1"
+    SPREADSHEET_ID = "1YhkZIIzSy--coI2rGs1nqtNf5pND3oiYjTaXefrOeko"
+    SHEET_NAME = "moyo"
     CREDENTIALS_JSON = "credentials.json"
 
     creds = service_account.Credentials.from_service_account_file(
