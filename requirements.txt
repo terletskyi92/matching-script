@@ -2,3 +2,4 @@ gspread
 pandas
 google-auth
 gspread-dataframe
+google-api-python-client
